@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -27,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     WebView mWebView;
     WebSettings mWebSettings;
-    TextView begingLoading,endLoading,loading,mTitle;
-    Button showHistory;
     String webTitle;
     Date webDate;
     String webUrl;
@@ -40,20 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //初始化
         init();
         mWebView.loadUrl("https://www.163.com/");
-
-        showHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent historyIntent = new Intent(MainActivity.this,HistoryList.class);
-                startActivity(historyIntent);
-
-            }
-        });
 
 //        mWebView.setWebViewClient(new WebViewClient(){
 //            @Override
@@ -66,21 +57,18 @@ public class MainActivity extends AppCompatActivity {
         mWebView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onReceivedTitle(WebView view,String title){
-                Log.d("MainActivity","标题在这里");
-                mTitle.setText(title);
-
-
+                toolbar.setTitle(title);
             }
 
             @Override
             public void onProgressChanged(WebView view,int newProgress){
-                if(newProgress < 100){
-                    String progress = newProgress + "%";
-                    loading.setText(progress);
-                } else if(newProgress == 100){
-                    String progress = newProgress + "%";
-                    loading.setText(progress);
-                }
+//                if(newProgress < 100){
+//                    String progress = newProgress + "%";
+//                    loading.setText(progress);
+//                } else if(newProgress == 100){
+//                    String progress = newProgress + "%";
+//                    loading.setText(progress);
+//                }
             }
         });
 
@@ -88,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageStarted(WebView view,String url,Bitmap favicon){
-                Log.d("MainActivity","开始加载了");
-                begingLoading.setText("开始加载了");
             }
 
             @Override
@@ -104,12 +90,28 @@ public class MainActivity extends AppCompatActivity {
                 history.setWebUrl(webUrl);
                 history.setHistoryDate(webDate);
                 history.save();
-
-                endLoading.setText("结束加载了");
             }
         });
     }
 
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.find_history:
+                Intent historyIntent = new Intent(MainActivity.this,HistoryList.class);
+                startActivity(historyIntent);
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
     //点击返回上一页面而不是退出浏览器
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
@@ -139,15 +141,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void init(){
         mWebView = (WebView) findViewById(R.id.webView1);
-        begingLoading = (TextView) findViewById(R.id.text_beginLoading);
-        endLoading = (TextView) findViewById(R.id.text_endLoading);
-        loading = (TextView) findViewById(R.id.text_Loading);
-        mTitle = (TextView) findViewById(R.id.title);
 
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
-
-        showHistory = findViewById(R.id.show_history);
 
     }
 }
