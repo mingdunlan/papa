@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,25 +7,101 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/webView_main"
+        android:layout_above="@+id/webView_bottomTool"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:layout_height="wrap_content">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <WebView
-        android:id="@+id/webView1"
+        </android.support.design.widget.AppBarLayout>
+
+        <WebView
+            android:id="@+id/webView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </WebView>
+    </android.support.design.widget.CoordinatorLayout>
+    <LinearLayout
+        android:id="@+id/webView_bottomTool"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <com.tcmsoso.webapplication.customView.BottomBar
+            android:id="@+id/webView_back"
+            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
 
-    </WebView>
-</android.support.design.widget.CoordinatorLayout>
+            <Button
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_back" />
+        </com.tcmsoso.webapplication.customView.BottomBar>
+
+        <com.tcmsoso.webapplication.customView.BottomBar
+            android:id="@+id/webView_forward"
+            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:gravity="center"
+                android:background="@drawable/ic_forward" />
+        </com.tcmsoso.webapplication.customView.BottomBar>
+        <com.tcmsoso.webapplication.customView.BottomBar
+            android:id="@+id/webView_home"
+            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:gravity="center"
+                android:background="@drawable/ic_home" />
+        </com.tcmsoso.webapplication.customView.BottomBar>
+        <com.tcmsoso.webapplication.customView.BottomBar
+            android:id="@+id/webView_window"
+            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_window" />
+        </com.tcmsoso.webapplication.customView.BottomBar>
+        <com.tcmsoso.webapplication.customView.BottomBar
+            android:id="@+id/webView_setting"
+            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_setting" />
+        </com.tcmsoso.webapplication.customView.BottomBar>
+    </LinearLayout>
+</RelativeLayout>

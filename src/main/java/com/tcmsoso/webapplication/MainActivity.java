@@ -27,13 +27,19 @@ import org.litepal.LitePal;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     WebView mWebView;
     WebSettings mWebSettings;
     String webTitle;
     Date webDate;
     String webUrl;
+
+    View webViewBack;
+    View webViewForward;
+    View webViewHome;
+    View webViewWindow;
+    View webViewSettings;
 
     boolean bookMarkIs = false;
 
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //初始化
         init();
-        mWebView.loadUrl("https://www.163.com/");
+        mWebView.loadUrl("file:///android_asset/homepage.html");
 
 //        mWebView.setWebViewClient(new WebViewClient(){
 //            @Override
@@ -99,6 +105,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.webView_back:
+                if(mWebView.canGoBack()){
+                    mWebView.goBack();
+                }
+                break;
+            case R.id.webView_forward:
+                if(mWebView.canGoBack()){
+                    mWebView.goForward();
+                }
+                break;
+            case R.id.webView_home:
+                break;
+            case R.id.webView_window:
+                break;
+            case R.id.webView_setting:
+                break;
+            default:
+                break;
+        }
+    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar,menu);
@@ -194,6 +223,18 @@ public class MainActivity extends AppCompatActivity {
 
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
+
+        webViewBack = findViewById(R.id.webView_back);
+        webViewForward = findViewById(R.id.webView_forward);
+        webViewHome = findViewById(R.id.webView_home);
+        webViewWindow = findViewById(R.id.webView_window);
+        webViewSettings = findViewById(R.id.webView_setting);
+
+        webViewBack.setOnClickListener(this);
+        webViewForward.setOnClickListener(this);
+        webViewHome.setOnClickListener(this);
+        webViewWindow.setOnClickListener(this);
+        webViewSettings.setOnClickListener(this);
 
     }
 }
