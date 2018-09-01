@@ -2,10 +2,11 @@
 <resources>
     <litepal>
         <dbname value="WebHitory"></dbname>
-        <version value="1"></version>
+        <version value="2"></version>
 
         <list>
             <mapping class="com.tcmsoso.webapplication.db.History"></mapping>
+            <mapping class="com.tcmsoso.webapplication.db.BookMark"></mapping>
         </list>
     </litepal>
 </resources>

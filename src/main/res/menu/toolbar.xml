@@ -3,9 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     <item
+        android:id="@+id/book_mark_false"
+        android:icon="@drawable/ic_bookmark_false"
+        android:title="书签"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/book_mark_true"
+        android:icon="@drawable/ic_bookmark_true"
+        android:title="书签"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/find_history"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="findHistory"
+        android:title="历史记录"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/find_bookmark"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="书签列表"
         app:showAsAction="never"/>
 
 </menu>

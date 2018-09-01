@@ -3,4 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBookMarkItemBackground">#b71bccf9</color>
+    <color name="colorBookMarkItemText">#bb3a1773</color>
 </resources>

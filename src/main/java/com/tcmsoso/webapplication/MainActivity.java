@@ -18,7 +18,9 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.tcmsoso.webapplication.db.BookMark;
 import com.tcmsoso.webapplication.db.History;
+import com.tcmsoso.webapplication.util.util;
 
 import org.litepal.LitePal;
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Date webDate;
     String webUrl;
 
+    boolean bookMarkIs = false;
 
 
     @Override
@@ -90,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 history.setWebUrl(webUrl);
                 history.setHistoryDate(webDate);
                 history.save();
-            }
+
+                checkBookMark();
+                }
         });
     }
 
@@ -101,17 +106,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if (bookMarkIs){
+            menu.findItem(R.id.book_mark_false).setVisible(false);
+            menu.findItem(R.id.book_mark_true).setVisible(true);
+            menu.findItem(R.id.find_history).setVisible(true);
+            menu.findItem(R.id.find_bookmark).setVisible(true);
+        } else{
+            menu.findItem(R.id.book_mark_false).setVisible(true);
+            menu.findItem(R.id.book_mark_true).setVisible(false);
+            menu.findItem(R.id.find_history).setVisible(true);
+            menu.findItem(R.id.find_bookmark).setVisible(true);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.find_history:
                 Intent historyIntent = new Intent(MainActivity.this,HistoryList.class);
                 startActivity(historyIntent);
                 break;
+            case R.id.book_mark_false:
+                BookMark bookMark = new BookMark();
+                bookMark.setTitle(webTitle);
+                bookMark.setDate(webDate);
+                bookMark.setMarkUrl(webUrl);
+                bookMark.save();
+
+                checkBookMark();
+                break;
+            case R.id.book_mark_true:
+                util.deleteBookMark(webTitle,webUrl);
+                checkBookMark();
+                break;
+            case R.id.find_bookmark:
+                Intent bookMarkIntent = new Intent(MainActivity.this,BookMarkActivity.class);
+                startActivity(bookMarkIntent);
+                break;
             default:
                 break;
         }
         return true;
     }
+
+    //书签图标变化
+    private void checkBookMark(){
+        if(util.isExistBookMark(webTitle,webUrl)){
+            bookMarkIs = true;
+            invalidateOptionsMenu();
+        } else {
+            bookMarkIs = false;
+            invalidateOptionsMenu();
+        }
+    }
+
     //点击返回上一页面而不是退出浏览器
     @Override
     public boolean onKeyDown(int keyCode,KeyEvent event){
